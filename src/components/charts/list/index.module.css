@@ -1,25 +1,34 @@
 .list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
+  gap: 12px;
   padding: 0;
 }
 
 .item {
   display: flex;
+  height: 100%;
+  max-height: 150px;
+  background-color: rgb(55, 55, 55);
+  border-radius: 8px;
+}
+
+.content {
+  width: 100%;
+  padding: 8px;
 }
 
 .cover {
-  width: 100px;
-  height: 100px;
+  height: 100%;
+  width: auto;
   border-radius: 8px;
-  margin-right: 8px;
 }
 
 .track {
   font-size: 24px;
 }
 
-.content span:last-child {
+.texts :nth-child(2),
+.content > :first-child {
   font-weight: bold;
 }

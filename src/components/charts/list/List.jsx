@@ -12,15 +12,18 @@ export const List = ({ content, title, label }) => {
       <span>{label}</span>
       <ul className={styles.list}>
         {results.map((song, index) => {
-          const { track_name, artist_name, year, artwork_url, album_name } = song;
+          const { track_name, artist_name, year, artwork_url, album_name, danceability } = song;
           return (
             <li className={styles.item} key={`result-${index}`}>
               <img className={styles.cover} src={artwork_url} />
               <div className={styles.content}>
                 <div className={styles.track}>{index + 1}. {track_name}</div>
-                <div className={styles.content}>
-                  <span>{album_name} by </span>
+                <div className={styles.texts}>
+                  <span>Album {album_name} by </span>
                   <span>{artist_name}</span>
+                  <p>{year}</p>
+                  <p>Danceability score: {danceability * 100}/100</p>
+                  {/* Faire une barre de progression avec le pourcentage rempli de danceabilité*/}
                 </div>
               </div>
             </li>

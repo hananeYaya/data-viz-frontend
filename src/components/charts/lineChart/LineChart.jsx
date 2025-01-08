@@ -1,6 +1,8 @@
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 
+import styles from "./index.module.css"
+
 // Register Chart.js components
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -10,7 +12,7 @@ const LineChart = ({ content, title, label }) => {
   if (isLoading) return <div>Loading...</div>;
 
   const labels = Object.keys(results)
-  const values = Object.values(results)
+  const values = Object.values(results).map(value => value * 100)
 
   const data = {
     labels: labels,
@@ -64,7 +66,7 @@ const LineChart = ({ content, title, label }) => {
     }
   }
 
-  return <Line data={data} options={options} />;
+  return <Line className={styles.lineChart} data={data} options={options} />;
 };
 
 export default LineChart;

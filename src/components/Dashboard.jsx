@@ -1,6 +1,7 @@
 import React from 'react';
-import { useAcousticnessYear, useTop10Danceable } from './../hooks/useApi.js';
-import LineChart from './charts/LineChart.jsx';
+import { useAcousticnessYear, useTop10Danceable, useDanceabilityPerYear } from './../hooks/useApi.js';
+import LineChart from './charts/lineChart/LineChart.jsx';
+import BarChart from './charts/BarChart.jsx';
 import List from './charts/list/List.jsx';
 
 import styles from "./index.module.css"
@@ -16,9 +17,10 @@ export const Dashboard = () => {
 
   return (
     <div className={styles.root}>
-      <h1>Best Spotify dashboard ever</h1>
-      <LineChart content={getData(useAcousticnessYear)} title="Average acousticness by year" label="From 0 to 1"/>
+      <h1>Spotify dashboard more or less aproximative</h1>
+      <BarChart content={getData(useDanceabilityPerYear)} title="Average acousticness by year" label="From 0 to 100%"/>
       <List content={getData(useTop10Danceable)} title="Top 10 of the most danceable tracks"/>
+      <LineChart content={getData(useAcousticnessYear)} title="Average acousticness by year" label="From 0 to 100%"/>
     </div>
   );
 };
