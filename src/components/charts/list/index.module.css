@@ -1,0 +1,21 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0;
+}
+
+.item {
+  display: flex;
+}
+
+.cover {
+  width: 100px;
+  height: auto;
+  border-radius: 8px;
+  margin-right: 8px;
+}
+
+.track {
+  font-size: 24px;
+}

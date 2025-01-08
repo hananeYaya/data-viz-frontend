@@ -1,19 +1,24 @@
 import React from 'react';
-import { BarChart } from './charts/BarChart';
-import { useAcousticnessYear } from './../hooks/useApi.js';
+import { useAcousticnessYear, useTop10Danceable } from './../hooks/useApi.js';
 import LineChart from './charts/LineChart.jsx';
+import List from './charts/list/List.jsx';
+
+import styles from "./index.module.css"
 
 export const Dashboard = () => {
-  const { data: songs, isLoading } = useAcousticnessYear();
-  const { data: content } = songs || {};
-
-  console.log(content)
-
-  if (isLoading) return <div>Loading...</div>;
+  const getData = (useDataHook) => {
+    const { data: content, isLoading } = useDataHook();
+    const { data: songs } = content || {};
+    const { results } = songs || {};
+    
+    return { results, isLoading };
+  }
 
   return (
-    <div className="w-full flex">
-      <LineChart content={content.average_acousticness} title="Average acousticness by year" label="From 0 to 1"/>
+    <div className={styles.root}>
+      <h1>Best Spotify dashboard ever</h1>
+      <LineChart content={getData(useAcousticnessYear)} title="Average acousticness by year" label="From 0 to 1"/>
+      <List content={getData(useTop10Danceable)} title="Top 10 of the most danceable tracks"/>
     </div>
   );
 };

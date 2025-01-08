@@ -6,8 +6,11 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 
 const LineChart = ({ content, title, label }) => {
-  const labels = Object.keys(content)
-  const values = Object.values(content)
+  const { results, isLoading } = content;
+  if (isLoading) return <div>Loading...</div>;
+
+  const labels = Object.keys(results)
+  const values = Object.values(results)
 
   const data = {
     labels: labels,
