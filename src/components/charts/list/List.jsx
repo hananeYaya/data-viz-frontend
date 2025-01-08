@@ -17,10 +17,10 @@ export const List = ({ content, title, label }) => {
             <li className={styles.item} key={`result-${index}`}>
               <img className={styles.cover} src={artwork_url} />
               <div className={styles.content}>
-                <div className={styles.track}>{track_name}</div>
+                <div className={styles.track}>{index + 1}. {track_name}</div>
                 <div className={styles.content}>
-                  <span>{album_name}</span>
-                  <span> by {artist_name}</span>
+                  <span>{album_name} by </span>
+                  <span>{artist_name}</span>
                 </div>
               </div>
             </li>

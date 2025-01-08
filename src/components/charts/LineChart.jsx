@@ -18,8 +18,8 @@ const LineChart = ({ content, title, label }) => {
       {
         label: label,
         data: values,
-        borderColor: 'rgba(75,192,192,1)',
-        backgroundColor: 'rgba(75,192,192,0.2)',
+        borderColor: 'rgb(65, 155, 75)',
+        backgroundColor: 'rgba(255, 255, 255)',
       },
     ],
   };
@@ -28,14 +28,41 @@ const LineChart = ({ content, title, label }) => {
     responsive: true,
     plugins: {
       legend: {
-        position: 'top',
+        position: 'bottom',
+        align: 'end',
       },
       title: {
         display: true,
         text: title,
+        color: 'white',
+        position: 'top',
+        align: 'center',
+        font: {
+          size: 24, 
+          family: 'Arial', 
+          weight: 'bold'
+        },
       },
     },
-  };
+    scales: {
+      x: {
+        ticks: {
+          color: 'rgba(255, 255, 255, 0.5)',
+        },
+        grid: {
+          color: 'rgba(200, 200, 200, 0.2)',
+        },
+      },
+      y: {
+        ticks: {
+          color: 'rgba(255, 255, 255, 0.5)',
+        },
+        grid: {
+          color: 'rgba(200, 200, 200, 0.2)',
+        }
+      }
+    }
+  }
 
   return <Line data={data} options={options} />;
 };
