@@ -1,35 +1,42 @@
 import React from "react";
-import { BarChart } from "./charts/BarChart";
-import { useAcousticnessYear } from "./../hooks/useApi.js";
-import { useTrackYears } from "./../hooks/useApi.js";
-import LineChart from "./charts/LineChart.jsx";
+import {
+  useAcousticnessYear,
+  useTop10Danceable,
+  useDanceabilityPerYear,
+  useTrackYears,
+} from "./../hooks/useApi.js";
+import LineChart from "./charts/lineChart/LineChart.jsx";
+import BarChart from "./charts/BarChart.jsx";
+import List from "./charts/list/List.jsx";
 import BubbleChart from "./charts/BubbleChart.jsx";
 
+import styles from "./index.module.css";
+
 export const Dashboard = () => {
-  const { data: songs, isLoading } = useAcousticnessYear();
-  const { data: content } = songs || {};
+  const getData = (useDataHook) => {
+    const { data: content, isLoading } = useDataHook();
+    const { data: songs } = content || {};
+    const { results } = songs || {};
 
-  const { data2: songs2, isLoading2 } = useTrackYears();
-  const { data2: content2 } = songs || {};
-
-  console.log(content2);
-
-  if (isLoading) return <div>Loading...</div>;
+    return { results, isLoading };
+  };
 
   return (
-    <div className="w-full flex">
-      <LineChart
-        content={content.average_acousticness}
+    <div className={styles.root}>
+      <h1>Spotify dashboard more or less aproximative</h1>
+      <BarChart
+        content={getData(useDanceabilityPerYear)}
         title="Average acousticness by year"
-        label="From 0 to 1"
+        label="From 0 to 100%"
       />
-
-      <h2>Bubble chart</h2>
-
-      <BubbleChart
-        content={content.result}
-        title="Tracks by year"
-        label="Test"
+      <List
+        content={getData(useTop10Danceable)}
+        title="Top 10 of the most danceable tracks"
+      />
+      <LineChart
+        content={getData(useAcousticnessYear)}
+        title="Average acousticness by year"
+        label="From 0 to 100%"
       />
     </div>
   );

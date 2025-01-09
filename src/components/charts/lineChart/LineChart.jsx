@@ -1,12 +1,13 @@
-import { Bar } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import { Line } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 
-import styles from "./lineChart/index.module.css"
+import styles from "./index.module.css"
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+// Register Chart.js components
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 
-const BarChart = ({ content, title, label }) => {
+const LineChart = ({ content, title, label }) => {
   const { results, isLoading } = content;
   if (isLoading) return <div>Loading...</div>;
 
@@ -14,17 +15,13 @@ const BarChart = ({ content, title, label }) => {
   const values = Object.values(results).map(value => value * 100)
 
   const data = {
-    type: 'bar',
     labels: labels,
     datasets: [
       {
         label: label,
         data: values,
-        backgroundColor: 'rgba(75, 192, 192, 0.5)',
-        borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 1,
-        borderRadius: 20,
-        borderSkipped: false
+        borderColor: 'rgb(65, 155, 75)',
+        backgroundColor: 'rgba(255, 255, 255)',
       },
     ],
   };
@@ -69,7 +66,7 @@ const BarChart = ({ content, title, label }) => {
     }
   }
 
-  return <Bar className={styles.lineChart} data={data} options={options} />;
+  return <Line className={styles.lineChart} data={data} options={options} />;
 };
 
-export default BarChart;
+export default LineChart;

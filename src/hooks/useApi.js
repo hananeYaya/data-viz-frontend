@@ -28,3 +28,10 @@ export const useTrackYears = () => {
     queryFn: spotifyApi.getTracksPerYear,
   });
 };
+
+export const useDanceabilityPerYear = () => {
+  return useQuery({
+    queryKey: ["danceabilityPerYear"],
+    queryFn: spotifyApi.getDanceabilityPerYear,
+  });
+};
