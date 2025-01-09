@@ -21,3 +21,10 @@ export const useAcousticnessYear = () => {
     queryFn: spotifyApi.getAcousticnessPerYear,
   });
 };
+
+export const useTrackYears = () => {
+  return useQuery({
+    queryKey: ["TracksPerYear"],
+    queryFn: spotifyApi.getTracksPerYear,
+  });
+};
