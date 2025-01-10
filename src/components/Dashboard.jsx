@@ -63,107 +63,33 @@ const YearInput = ({ value, onChange, placeholder }) => {
   );
 };
 
-const charts = [
-  {
-    key: "trackYears",
-    hook: useTracksByYear,
-    type: "lineChart",
-    xKey: "year",
-    yKey: "count",
-    title: "Nombre de Titres par Année",
-    xLabel: "Année",
-    yLabel: "Nombre de Titres"
-  },
-  {
-    key: "danceabilityVSvalence",
-    hook: useDanceabilityAndValence,
-    type: "heatmapChart",
-    title: "Relation Dansabilité et Positivité",
-    xLabel: "Dansabilité (0-1)",
-    yLabel: "Positivité (0-1)"
-  },
-  {
-    // essayer de faire fonctionner avec deux hooks différents pour le curved
-    key: "accousticVSdanceability",
-    chart: CurvedLineChart,
-    xKey: "year",
-    yKey: ["acousticness", "danceability"],
-    labels: ["Acoustique", "Dansabilité"],
-    title: "Caractéristiques Musicales",
-    xLabel: "Année",
-    yLabel: "Score (0-1)"
-  },
-  {
-    key: "popularityLanguage",
-    hook: usePopularityByLanguage,
-    type: "barChart",
-    xKey: "language",
-    yKey: "popularity",
-    title: "Popularité par Langue",
-    xLabel: "Langue",
-    yLabel: "Popularité"
-  },
-  {
-    key: "topPopular",
-    hook: useTop10Popular,
-    type: "list",
-    title: "Top 10 des Titres les Plus Populaires",
-    xKey: "popularity",
-    xLabel: "Popularité"
-  },
-  {
-    key: "topDance",
-    hook: useTop10Dance,
-    type: "list",
-    title: "Top 10 des Titres les les Plus Dansants",
-    xKey: "danceability",
-    xLabel: "Dansabilité"
-  },
-  {
-    key: "topRelax",
-    hook: useTop10Relaxing,
-    type: "list",
-    title: "Top 10 des Titres les les Plus Relaxants",
-    xKey: "acousticness",
-    xLabel: "Relaxant"
-  },
-  {
-    key: "topLong",
-    hook: useTop10Longest,
-    type: "list",
-    title: "Top 10 des Titres les les Plus Longs",
-    xKey: "duration_ms",
-    xLabel: "Durée"
-    // stats={`Durée: ${Math.floor(track.duration_ms / 60000)}:${String(Math.floor((track.duration_ms % 60000) / 1000)).padStart(2, '0')}`}
-  },
-  {
-    key: "artistYear",
-    title: "Top 10 Artistes par Année",
-    hook: useTracksByArtistYear,
-  },
-  {
-    key: "features",
-    title: "Caractéristiques Musicales",
-    hook: useAcousticnessByYear,
-  },
-  {
-    key: "mode",
-    title: "Modalité du track (Major vs Minor)",
-    hook: useMode,
-    colors: ['#1ed760', '#d14f21'],
-    type: "pie"
-  },
-  {
-    key: "keys",
-    title: "Tonalité du track",
-    hook: useKey,
-    colors: [
-      '#ff6384', '#1eEf60', '#d14f21', '#b10f2e', '#f39c12',
-      '#e74c3c', '#9b59b6', '#3498db', '#2ecc71', '#e67e22',
-      '#ecf0f1', '#95a5a6'
-    ],
-    type: "doughnut"
-  }]
+const Widget = ({ title, children, className = '', onExpand, expanded }) => {
+  const content = (
+    <>
+      <h3 className="widget-title">{title}</h3>
+      <div className="widget-content">{children}</div>
+    </>
+  );
+
+  if (expanded) {
+    return (
+      <div className="expanded-widget-overlay" onClick={() => onExpand()}>
+        <div className="expanded-widget" onClick={e => e.stopPropagation()}>
+          <button className="close-button" onClick={() => onExpand()}>
+            <RiCloseLine size={24} />
+          </button>
+          {content}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={`widget ${className}`} onClick={onExpand}>
+      {content}
+    </div>
+  );
+};
 
 const LoadingSpinner = () => (
   <div className="loading-spinner">
@@ -272,7 +198,7 @@ export const Dashboard = () => {
           <div className="logo-container">
             <SpotifyLogo />
           </div>
-          <h1>Tableau de Bord Statistique </h1>
+          <h1>Tableau de Bord Statistique Analyse des Données </h1>
         </header>
 
         <div className="dashboard-grid">
