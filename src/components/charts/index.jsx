@@ -52,7 +52,7 @@ const Chart = ({
   />
   )
   if (chartType === "list") return (
-    <List data={data} xKey={xKey}/>
+    <List data={data} xKey={xKey} xLabel={xLabel}/>
   )
   if (chartType === "pie") return (
     <PieChart 
