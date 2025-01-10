@@ -11,6 +11,8 @@ import BarChart from './charts/BarChart';
 import LineChart from './charts/LineChart';
 import HeatmapChart from './charts/HeatmapChart';
 import CurvedLineChart from './charts/CurvedLineChart';
+import PieChart from './charts/PieChart';
+import DoughnutChart from './charts/DoughnutChart';
 import {
   useTracksByYear,
   useTracksByArtistYear,
@@ -22,7 +24,9 @@ import {
   useTop10Dance,
   useTop10Relaxing,
   usePopularityByLanguage,
-  useTop10Longest
+  useTop10Longest,
+  useMode,
+  useKey
 } from '../hooks/useApi';
 
 // Composant pour le logo Spotify
@@ -140,6 +144,8 @@ export const Dashboard = () => {
   const { data: top10Relaxing, isLoading: isLoadingTop10Relaxing, error: top10RelaxingError } = useTop10Relaxing();
   const { data: popularityLanguageData, isLoading: isLoadingPopLanguage, error: popLanguageError } = usePopularityByLanguage();
   const { data: top10Longest, isLoading: isLoadingTop10Longest, error: top10LongestError } = useTop10Longest();
+  const { data: mode, isLoading: isLoadingMode, error: modeError} = useMode();
+  const { data: key, isLoading: isLoadingKey, error: keyError} = useKey();
 
   const handleExpand = (widgetId) => {
     setExpandedWidget(expandedWidget === widgetId ? null : widgetId);
@@ -351,6 +357,60 @@ export const Dashboard = () => {
                       <div className="placeholder">Aucune donnée disponible</div>
                     )}
                   </Widget>
+                  <Widget 
+                    title="Modalité du track (Major vs Minor)" 
+                    className="kpi-widget"
+                    onExpand={() => handleExpand('mode')}
+                    expanded={expandedWidget === 'mode'}
+                  >
+                    {isLoadingMode ? (
+                      <LoadingSpinner />
+                    ) : modeError ? (
+                      <ErrorMessage message="Erreur lors du chargement des données" />
+                    ) : mode?.items ? (
+                      <PieChart
+                        data={Object.entries(mode.items).map(([key, value]) => ({
+                          label: key,
+                          value: value
+                        }))}
+                        title="Distribution du Mode (Major vs Minor)"
+                        colors={['#1ed760', '#d14f21']}
+                        expanded={expandedWidget === 'mode'}
+                      />
+                    ) : (
+                      <div className="placeholder">Aucune donnée disponible</div>
+                    )}
+                  </Widget>
+                  <Widget
+                    title="Tonalité musicale du track"
+                    className="kpi-widget"
+                    onExpand={() => handleExpand('key')}
+                    expanded={expandedWidget === 'key'}
+                  >
+                    {isLoadingKey ? (
+                      <LoadingSpinner />
+                    ) : keyError ? (
+                      <ErrorMessage message="Erreur lors du chargement des données" />
+                    ) : key?.items ? (
+                      <DoughnutChart
+                        data={Object.entries(key.items).map(([key, value]) => ({
+                          label: key,
+                          value: value
+                        }))}
+                        title="La tonalité musicale"
+                        colors={[
+                          '#1ed760', '#1fdf6f', '#d14f21', '#b10f2e', '#f39c12',
+                          '#e74c3c', '#9b59b6', '#3498db', '#2ecc71', '#e67e22',
+                          '#ecf0f1', '#95a5a6'
+                        ]}
+                        expanded={expandedWidget === 'key'}
+                      />
+                    ) : (
+                      <div className="placeholder">Aucune donnée disponible</div>
+                    )}
+                  </Widget>
+
+
                 </div>
               </div>
             </div>

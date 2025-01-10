@@ -82,3 +82,18 @@ export const useTop10Longest = () => {
     queryFn: spotifyApi.getTop10Longest,
   });
 };
+//mode
+export const useMode = () => {
+  return useQuery({
+    queryKey: ["mode"],
+    queryFn: spotifyApi.getMode,
+  });
+};
+
+//key
+export const useKey = () => {
+  return useQuery({
+    queryKey: ["key"],
+    queryFn: spotifyApi.getKey,
+  });
+};
