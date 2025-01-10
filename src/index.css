@@ -52,10 +52,9 @@ body {
 
 .logo-container {
   padding: 20px;
-  margin-bottom: 20px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: top;
 }
 
 .spotify-logo {
@@ -63,11 +62,6 @@ body {
   height: auto;
 }
 
-.sidebar-items {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sm);
-}
 
 .sidebar-item {
   display: flex;
